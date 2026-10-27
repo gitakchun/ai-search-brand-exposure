@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+.DS_Store
+AI캠퍼스_생성형 AI_4. Vector DB (1).pdf
+AI검색_브랜드노출분석_리포트.docx
+AI검색_브랜드노출분석_리포트.pdf
+천기탁_AI검색_브랜드노출분석.pdf

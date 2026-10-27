@@ -1,0 +1,806 @@
+{
+  "meta": {
+    "categories": {
+      "공기청정기": {
+        "brands": [
+          "LG전자",
+          "삼성전자",
+          "코웨이",
+          "위닉스",
+          "다이슨",
+          "샤오미",
+          "블루에어",
+          "SK매직",
+          "쿠쿠"
+        ],
+        "aliases": {
+          "LG전자": [
+            "LG",
+            "엘지",
+            "퓨리케어",
+            "PuriCare",
+            "LG 퓨리케어"
+          ],
+          "삼성전자": [
+            "삼성",
+            "비스포크",
+            "BESPOKE",
+            "큐브",
+            "블루스카이"
+          ],
+          "코웨이": [
+            "Coway",
+            "노블",
+            "아이콘"
+          ],
+          "위닉스": [
+            "Winix",
+            "제로",
+            "타워"
+          ],
+          "다이슨": [
+            "Dyson",
+            "퓨어쿨",
+            "Pure Cool"
+          ],
+          "샤오미": [
+            "Xiaomi",
+            "미에어",
+            "Mi Air"
+          ],
+          "블루에어": [
+            "Blueair"
+          ],
+          "SK매직": [
+            "에스케이매직",
+            "SK 매직"
+          ],
+          "쿠쿠": [
+            "CUCKOO",
+            "인스퓨어"
+          ]
+        }
+      },
+      "로봇청소기": {
+        "brands": [
+          "LG전자",
+          "삼성전자",
+          "로보락",
+          "에코백스",
+          "드리미",
+          "샤오미",
+          "나르왈",
+          "아이로봇"
+        ],
+        "aliases": {
+          "LG전자": [
+            "LG",
+            "엘지",
+            "코드제로",
+            "CordZero",
+            "R5",
+            "로보킹"
+          ],
+          "삼성전자": [
+            "삼성",
+            "비스포크",
+            "BESPOKE",
+            "제트봇",
+            "JetBot"
+          ],
+          "로보락": [
+            "Roborock",
+            "S8",
+            "큐레보"
+          ],
+          "에코백스": [
+            "Ecovacs",
+            "디봇",
+            "DEEBOT"
+          ],
+          "드리미": [
+            "Dreame",
+            "드림"
+          ],
+          "샤오미": [
+            "Xiaomi",
+            "미지아",
+            "Mijia"
+          ],
+          "나르왈": [
+            "Narwal",
+            "프레오"
+          ],
+          "아이로봇": [
+            "iRobot",
+            "룸바",
+            "Roomba"
+          ]
+        }
+      }
+    },
+    "intents": [
+      "일반추천",
+      "가성비",
+      "프리미엄",
+      "공간상황",
+      "사용자특성",
+      "브랜드비교"
+    ],
+    "n_prompts": 96
+  },
+  "prompts": [
+    {
+      "prompt_id": "P0001",
+      "category": "공기청정기",
+      "intent": "일반추천",
+      "template": "{c} 추천해줘",
+      "prompt": "공기청정기 추천해줘"
+    },
+    {
+      "prompt_id": "P0002",
+      "category": "공기청정기",
+      "intent": "일반추천",
+      "template": "요즘 제일 잘 나가는 {c} 뭐야?",
+      "prompt": "요즘 제일 잘 나가는 공기청정기 뭐야?"
+    },
+    {
+      "prompt_id": "P0003",
+      "category": "공기청정기",
+      "intent": "일반추천",
+      "template": "{c} 뭐 사는 게 좋을까?",
+      "prompt": "공기청정기 뭐 사는 게 좋을까?"
+    },
+    {
+      "prompt_id": "P0004",
+      "category": "공기청정기",
+      "intent": "일반추천",
+      "template": "{c} 사려는데 어떤 브랜드가 좋아?",
+      "prompt": "공기청정기 사려는데 어떤 브랜드가 좋아?"
+    },
+    {
+      "prompt_id": "P0005",
+      "category": "공기청정기",
+      "intent": "일반추천",
+      "template": "{c} 베스트셀러 알려줘",
+      "prompt": "공기청정기 베스트셀러 알려줘"
+    },
+    {
+      "prompt_id": "P0006",
+      "category": "공기청정기",
+      "intent": "일반추천",
+      "template": "{c} 인기 순위 알려줘",
+      "prompt": "공기청정기 인기 순위 알려줘"
+    },
+    {
+      "prompt_id": "P0007",
+      "category": "공기청정기",
+      "intent": "일반추천",
+      "template": "{c} 어떤 제품이 제일 무난해?",
+      "prompt": "공기청정기 어떤 제품이 제일 무난해?"
+    },
+    {
+      "prompt_id": "P0008",
+      "category": "공기청정기",
+      "intent": "일반추천",
+      "template": "처음 사는 사람한테 맞는 {c} 추천",
+      "prompt": "처음 사는 사람한테 맞는 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0009",
+      "category": "공기청정기",
+      "intent": "가성비",
+      "template": "가성비 좋은 {c} 추천",
+      "prompt": "가성비 좋은 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0010",
+      "category": "공기청정기",
+      "intent": "가성비",
+      "template": "저렴한 {c} 뭐가 있어?",
+      "prompt": "저렴한 공기청정기 뭐가 있어?"
+    },
+    {
+      "prompt_id": "P0011",
+      "category": "공기청정기",
+      "intent": "가성비",
+      "template": "30만원 이하 {c} 추천해줘",
+      "prompt": "30만원 이하 공기청정기 추천해줘"
+    },
+    {
+      "prompt_id": "P0012",
+      "category": "공기청정기",
+      "intent": "가성비",
+      "template": "싸고 괜찮은 {c} 있을까?",
+      "prompt": "싸고 괜찮은 공기청정기 있을까?"
+    },
+    {
+      "prompt_id": "P0013",
+      "category": "공기청정기",
+      "intent": "가성비",
+      "template": "예산 적을 때 살 만한 {c}",
+      "prompt": "예산 적을 때 살 만한 공기청정기"
+    },
+    {
+      "prompt_id": "P0014",
+      "category": "공기청정기",
+      "intent": "가성비",
+      "template": "{c} 중에 돈값 제일 하는 거",
+      "prompt": "공기청정기 중에 돈값 제일 하는 거"
+    },
+    {
+      "prompt_id": "P0015",
+      "category": "공기청정기",
+      "intent": "가성비",
+      "template": "가격 대비 성능 좋은 {c} 알려줘",
+      "prompt": "가격 대비 성능 좋은 공기청정기 알려줘"
+    },
+    {
+      "prompt_id": "P0016",
+      "category": "공기청정기",
+      "intent": "가성비",
+      "template": "중저가 {c} 비교해줘",
+      "prompt": "중저가 공기청정기 비교해줘"
+    },
+    {
+      "prompt_id": "P0017",
+      "category": "공기청정기",
+      "intent": "프리미엄",
+      "template": "돈 아끼지 말고 제일 좋은 {c} 추천",
+      "prompt": "돈 아끼지 말고 제일 좋은 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0018",
+      "category": "공기청정기",
+      "intent": "프리미엄",
+      "template": "프리미엄 {c} 뭐가 있어?",
+      "prompt": "프리미엄 공기청정기 뭐가 있어?"
+    },
+    {
+      "prompt_id": "P0019",
+      "category": "공기청정기",
+      "intent": "프리미엄",
+      "template": "{c} 최고급 모델 알려줘",
+      "prompt": "공기청정기 최고급 모델 알려줘"
+    },
+    {
+      "prompt_id": "P0020",
+      "category": "공기청정기",
+      "intent": "프리미엄",
+      "template": "성능 제일 좋은 {c}",
+      "prompt": "성능 제일 좋은 공기청정기"
+    },
+    {
+      "prompt_id": "P0021",
+      "category": "공기청정기",
+      "intent": "프리미엄",
+      "template": "비싸도 되니까 좋은 {c} 골라줘",
+      "prompt": "비싸도 되니까 좋은 공기청정기 골라줘"
+    },
+    {
+      "prompt_id": "P0022",
+      "category": "공기청정기",
+      "intent": "프리미엄",
+      "template": "하이엔드 {c} 비교",
+      "prompt": "하이엔드 공기청정기 비교"
+    },
+    {
+      "prompt_id": "P0023",
+      "category": "공기청정기",
+      "intent": "프리미엄",
+      "template": "{c} 플래그십 제품 추천",
+      "prompt": "공기청정기 플래그십 제품 추천"
+    },
+    {
+      "prompt_id": "P0024",
+      "category": "공기청정기",
+      "intent": "프리미엄",
+      "template": "가격 상관없이 {c} 1등 제품",
+      "prompt": "가격 상관없이 공기청정기 1등 제품"
+    },
+    {
+      "prompt_id": "P0025",
+      "category": "공기청정기",
+      "intent": "공간상황",
+      "template": "30평대 아파트에 맞는 {c} 추천",
+      "prompt": "30평대 아파트에 맞는 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0026",
+      "category": "공기청정기",
+      "intent": "공간상황",
+      "template": "원룸용 {c} 추천해줘",
+      "prompt": "원룸용 공기청정기 추천해줘"
+    },
+    {
+      "prompt_id": "P0027",
+      "category": "공기청정기",
+      "intent": "공간상황",
+      "template": "거실용 {c} 뭐가 좋아?",
+      "prompt": "거실용 공기청정기 뭐가 좋아?"
+    },
+    {
+      "prompt_id": "P0028",
+      "category": "공기청정기",
+      "intent": "공간상황",
+      "template": "좁은 집에 두기 좋은 {c}",
+      "prompt": "좁은 집에 두기 좋은 공기청정기"
+    },
+    {
+      "prompt_id": "P0029",
+      "category": "공기청정기",
+      "intent": "공간상황",
+      "template": "신혼집에 들일 {c} 추천",
+      "prompt": "신혼집에 들일 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0030",
+      "category": "공기청정기",
+      "intent": "공간상황",
+      "template": "복층 구조에 맞는 {c}",
+      "prompt": "복층 구조에 맞는 공기청정기"
+    },
+    {
+      "prompt_id": "P0031",
+      "category": "공기청정기",
+      "intent": "공간상황",
+      "template": "방마다 두려는데 {c} 추천",
+      "prompt": "방마다 두려는데 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0032",
+      "category": "공기청정기",
+      "intent": "공간상황",
+      "template": "넓은 집에 쓸 {c} 골라줘",
+      "prompt": "넓은 집에 쓸 공기청정기 골라줘"
+    },
+    {
+      "prompt_id": "P0033",
+      "category": "공기청정기",
+      "intent": "사용자특성",
+      "template": "아기 있는 집 {c} 추천",
+      "prompt": "아기 있는 집 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0034",
+      "category": "공기청정기",
+      "intent": "사용자특성",
+      "template": "반려동물 키우는 집 {c} 추천",
+      "prompt": "반려동물 키우는 집 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0035",
+      "category": "공기청정기",
+      "intent": "사용자특성",
+      "template": "자취생용 {c} 추천",
+      "prompt": "자취생용 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0036",
+      "category": "공기청정기",
+      "intent": "사용자특성",
+      "template": "부모님 드릴 {c} 추천",
+      "prompt": "부모님 드릴 공기청정기 추천"
+    },
+    {
+      "prompt_id": "P0037",
+      "category": "공기청정기",
+      "intent": "사용자특성",
+      "template": "1인 가구 {c} 뭐가 좋아?",
+      "prompt": "1인 가구 공기청정기 뭐가 좋아?"
+    },
+    {
+      "prompt_id": "P0038",
+      "category": "공기청정기",
+      "intent": "사용자특성",
+      "template": "맞벌이 부부한테 맞는 {c}",
+      "prompt": "맞벌이 부부한테 맞는 공기청정기"
+    },
+    {
+      "prompt_id": "P0039",
+      "category": "공기청정기",
+      "intent": "사용자특성",
+      "template": "청소 자주 못 하는 사람용 {c}",
+      "prompt": "청소 자주 못 하는 사람용 공기청정기"
+    },
+    {
+      "prompt_id": "P0040",
+      "category": "공기청정기",
+      "intent": "사용자특성",
+      "template": "기계 잘 못 다루는 사람도 쓸 수 있는 {c}",
+      "prompt": "기계 잘 못 다루는 사람도 쓸 수 있는 공기청정기"
+    },
+    {
+      "prompt_id": "P0041",
+      "category": "공기청정기",
+      "intent": "브랜드비교",
+      "template": "LG랑 삼성 {c} 뭐가 더 나아?",
+      "prompt": "LG랑 삼성 공기청정기 뭐가 더 나아?"
+    },
+    {
+      "prompt_id": "P0042",
+      "category": "공기청정기",
+      "intent": "브랜드비교",
+      "template": "{c} 국산이랑 외산 중에 뭐 사?",
+      "prompt": "공기청정기 국산이랑 외산 중에 뭐 사?"
+    },
+    {
+      "prompt_id": "P0043",
+      "category": "공기청정기",
+      "intent": "브랜드비교",
+      "template": "{c} 브랜드별 장단점 비교해줘",
+      "prompt": "공기청정기 브랜드별 장단점 비교해줘"
+    },
+    {
+      "prompt_id": "P0044",
+      "category": "공기청정기",
+      "intent": "브랜드비교",
+      "template": "{c} 살 때 어느 브랜드가 AS 좋아?",
+      "prompt": "공기청정기 살 때 어느 브랜드가 AS 좋아?"
+    },
+    {
+      "prompt_id": "P0045",
+      "category": "공기청정기",
+      "intent": "브랜드비교",
+      "template": "{c} 중국 브랜드 써도 괜찮아?",
+      "prompt": "공기청정기 중국 브랜드 써도 괜찮아?"
+    },
+    {
+      "prompt_id": "P0046",
+      "category": "공기청정기",
+      "intent": "브랜드비교",
+      "template": "{c} 브랜드 순위 매겨줘",
+      "prompt": "공기청정기 브랜드 순위 매겨줘"
+    },
+    {
+      "prompt_id": "P0047",
+      "category": "공기청정기",
+      "intent": "브랜드비교",
+      "template": "{c} 대기업 제품이 나아 중소기업이 나아?",
+      "prompt": "공기청정기 대기업 제품이 나아 중소기업이 나아?"
+    },
+    {
+      "prompt_id": "P0048",
+      "category": "공기청정기",
+      "intent": "브랜드비교",
+      "template": "{c} 오래 쓸 수 있는 브랜드는?",
+      "prompt": "공기청정기 오래 쓸 수 있는 브랜드는?"
+    },
+    {
+      "prompt_id": "P0049",
+      "category": "로봇청소기",
+      "intent": "일반추천",
+      "template": "{c} 추천해줘",
+      "prompt": "로봇청소기 추천해줘"
+    },
+    {
+      "prompt_id": "P0050",
+      "category": "로봇청소기",
+      "intent": "일반추천",
+      "template": "요즘 제일 잘 나가는 {c} 뭐야?",
+      "prompt": "요즘 제일 잘 나가는 로봇청소기 뭐야?"
+    },
+    {
+      "prompt_id": "P0051",
+      "category": "로봇청소기",
+      "intent": "일반추천",
+      "template": "{c} 뭐 사는 게 좋을까?",
+      "prompt": "로봇청소기 뭐 사는 게 좋을까?"
+    },
+    {
+      "prompt_id": "P0052",
+      "category": "로봇청소기",
+      "intent": "일반추천",
+      "template": "{c} 사려는데 어떤 브랜드가 좋아?",
+      "prompt": "로봇청소기 사려는데 어떤 브랜드가 좋아?"
+    },
+    {
+      "prompt_id": "P0053",
+      "category": "로봇청소기",
+      "intent": "일반추천",
+      "template": "{c} 베스트셀러 알려줘",
+      "prompt": "로봇청소기 베스트셀러 알려줘"
+    },
+    {
+      "prompt_id": "P0054",
+      "category": "로봇청소기",
+      "intent": "일반추천",
+      "template": "{c} 인기 순위 알려줘",
+      "prompt": "로봇청소기 인기 순위 알려줘"
+    },
+    {
+      "prompt_id": "P0055",
+      "category": "로봇청소기",
+      "intent": "일반추천",
+      "template": "{c} 어떤 제품이 제일 무난해?",
+      "prompt": "로봇청소기 어떤 제품이 제일 무난해?"
+    },
+    {
+      "prompt_id": "P0056",
+      "category": "로봇청소기",
+      "intent": "일반추천",
+      "template": "처음 사는 사람한테 맞는 {c} 추천",
+      "prompt": "처음 사는 사람한테 맞는 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0057",
+      "category": "로봇청소기",
+      "intent": "가성비",
+      "template": "가성비 좋은 {c} 추천",
+      "prompt": "가성비 좋은 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0058",
+      "category": "로봇청소기",
+      "intent": "가성비",
+      "template": "저렴한 {c} 뭐가 있어?",
+      "prompt": "저렴한 로봇청소기 뭐가 있어?"
+    },
+    {
+      "prompt_id": "P0059",
+      "category": "로봇청소기",
+      "intent": "가성비",
+      "template": "30만원 이하 {c} 추천해줘",
+      "prompt": "30만원 이하 로봇청소기 추천해줘"
+    },
+    {
+      "prompt_id": "P0060",
+      "category": "로봇청소기",
+      "intent": "가성비",
+      "template": "싸고 괜찮은 {c} 있을까?",
+      "prompt": "싸고 괜찮은 로봇청소기 있을까?"
+    },
+    {
+      "prompt_id": "P0061",
+      "category": "로봇청소기",
+      "intent": "가성비",
+      "template": "예산 적을 때 살 만한 {c}",
+      "prompt": "예산 적을 때 살 만한 로봇청소기"
+    },
+    {
+      "prompt_id": "P0062",
+      "category": "로봇청소기",
+      "intent": "가성비",
+      "template": "{c} 중에 돈값 제일 하는 거",
+      "prompt": "로봇청소기 중에 돈값 제일 하는 거"
+    },
+    {
+      "prompt_id": "P0063",
+      "category": "로봇청소기",
+      "intent": "가성비",
+      "template": "가격 대비 성능 좋은 {c} 알려줘",
+      "prompt": "가격 대비 성능 좋은 로봇청소기 알려줘"
+    },
+    {
+      "prompt_id": "P0064",
+      "category": "로봇청소기",
+      "intent": "가성비",
+      "template": "중저가 {c} 비교해줘",
+      "prompt": "중저가 로봇청소기 비교해줘"
+    },
+    {
+      "prompt_id": "P0065",
+      "category": "로봇청소기",
+      "intent": "프리미엄",
+      "template": "돈 아끼지 말고 제일 좋은 {c} 추천",
+      "prompt": "돈 아끼지 말고 제일 좋은 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0066",
+      "category": "로봇청소기",
+      "intent": "프리미엄",
+      "template": "프리미엄 {c} 뭐가 있어?",
+      "prompt": "프리미엄 로봇청소기 뭐가 있어?"
+    },
+    {
+      "prompt_id": "P0067",
+      "category": "로봇청소기",
+      "intent": "프리미엄",
+      "template": "{c} 최고급 모델 알려줘",
+      "prompt": "로봇청소기 최고급 모델 알려줘"
+    },
+    {
+      "prompt_id": "P0068",
+      "category": "로봇청소기",
+      "intent": "프리미엄",
+      "template": "성능 제일 좋은 {c}",
+      "prompt": "성능 제일 좋은 로봇청소기"
+    },
+    {
+      "prompt_id": "P0069",
+      "category": "로봇청소기",
+      "intent": "프리미엄",
+      "template": "비싸도 되니까 좋은 {c} 골라줘",
+      "prompt": "비싸도 되니까 좋은 로봇청소기 골라줘"
+    },
+    {
+      "prompt_id": "P0070",
+      "category": "로봇청소기",
+      "intent": "프리미엄",
+      "template": "하이엔드 {c} 비교",
+      "prompt": "하이엔드 로봇청소기 비교"
+    },
+    {
+      "prompt_id": "P0071",
+      "category": "로봇청소기",
+      "intent": "프리미엄",
+      "template": "{c} 플래그십 제품 추천",
+      "prompt": "로봇청소기 플래그십 제품 추천"
+    },
+    {
+      "prompt_id": "P0072",
+      "category": "로봇청소기",
+      "intent": "프리미엄",
+      "template": "가격 상관없이 {c} 1등 제품",
+      "prompt": "가격 상관없이 로봇청소기 1등 제품"
+    },
+    {
+      "prompt_id": "P0073",
+      "category": "로봇청소기",
+      "intent": "공간상황",
+      "template": "30평대 아파트에 맞는 {c} 추천",
+      "prompt": "30평대 아파트에 맞는 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0074",
+      "category": "로봇청소기",
+      "intent": "공간상황",
+      "template": "원룸용 {c} 추천해줘",
+      "prompt": "원룸용 로봇청소기 추천해줘"
+    },
+    {
+      "prompt_id": "P0075",
+      "category": "로봇청소기",
+      "intent": "공간상황",
+      "template": "거실용 {c} 뭐가 좋아?",
+      "prompt": "거실용 로봇청소기 뭐가 좋아?"
+    },
+    {
+      "prompt_id": "P0076",
+      "category": "로봇청소기",
+      "intent": "공간상황",
+      "template": "좁은 집에 두기 좋은 {c}",
+      "prompt": "좁은 집에 두기 좋은 로봇청소기"
+    },
+    {
+      "prompt_id": "P0077",
+      "category": "로봇청소기",
+      "intent": "공간상황",
+      "template": "신혼집에 들일 {c} 추천",
+      "prompt": "신혼집에 들일 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0078",
+      "category": "로봇청소기",
+      "intent": "공간상황",
+      "template": "복층 구조에 맞는 {c}",
+      "prompt": "복층 구조에 맞는 로봇청소기"
+    },
+    {
+      "prompt_id": "P0079",
+      "category": "로봇청소기",
+      "intent": "공간상황",
+      "template": "방마다 두려는데 {c} 추천",
+      "prompt": "방마다 두려는데 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0080",
+      "category": "로봇청소기",
+      "intent": "공간상황",
+      "template": "넓은 집에 쓸 {c} 골라줘",
+      "prompt": "넓은 집에 쓸 로봇청소기 골라줘"
+    },
+    {
+      "prompt_id": "P0081",
+      "category": "로봇청소기",
+      "intent": "사용자특성",
+      "template": "아기 있는 집 {c} 추천",
+      "prompt": "아기 있는 집 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0082",
+      "category": "로봇청소기",
+      "intent": "사용자특성",
+      "template": "반려동물 키우는 집 {c} 추천",
+      "prompt": "반려동물 키우는 집 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0083",
+      "category": "로봇청소기",
+      "intent": "사용자특성",
+      "template": "자취생용 {c} 추천",
+      "prompt": "자취생용 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0084",
+      "category": "로봇청소기",
+      "intent": "사용자특성",
+      "template": "부모님 드릴 {c} 추천",
+      "prompt": "부모님 드릴 로봇청소기 추천"
+    },
+    {
+      "prompt_id": "P0085",
+      "category": "로봇청소기",
+      "intent": "사용자특성",
+      "template": "1인 가구 {c} 뭐가 좋아?",
+      "prompt": "1인 가구 로봇청소기 뭐가 좋아?"
+    },
+    {
+      "prompt_id": "P0086",
+      "category": "로봇청소기",
+      "intent": "사용자특성",
+      "template": "맞벌이 부부한테 맞는 {c}",
+      "prompt": "맞벌이 부부한테 맞는 로봇청소기"
+    },
+    {
+      "prompt_id": "P0087",
+      "category": "로봇청소기",
+      "intent": "사용자특성",
+      "template": "청소 자주 못 하는 사람용 {c}",
+      "prompt": "청소 자주 못 하는 사람용 로봇청소기"
+    },
+    {
+      "prompt_id": "P0088",
+      "category": "로봇청소기",
+      "intent": "사용자특성",
+      "template": "기계 잘 못 다루는 사람도 쓸 수 있는 {c}",
+      "prompt": "기계 잘 못 다루는 사람도 쓸 수 있는 로봇청소기"
+    },
+    {
+      "prompt_id": "P0089",
+      "category": "로봇청소기",
+      "intent": "브랜드비교",
+      "template": "LG랑 삼성 {c} 뭐가 더 나아?",
+      "prompt": "LG랑 삼성 로봇청소기 뭐가 더 나아?"
+    },
+    {
+      "prompt_id": "P0090",
+      "category": "로봇청소기",
+      "intent": "브랜드비교",
+      "template": "{c} 국산이랑 외산 중에 뭐 사?",
+      "prompt": "로봇청소기 국산이랑 외산 중에 뭐 사?"
+    },
+    {
+      "prompt_id": "P0091",
+      "category": "로봇청소기",
+      "intent": "브랜드비교",
+      "template": "{c} 브랜드별 장단점 비교해줘",
+      "prompt": "로봇청소기 브랜드별 장단점 비교해줘"
+    },
+    {
+      "prompt_id": "P0092",
+      "category": "로봇청소기",
+      "intent": "브랜드비교",
+      "template": "{c} 살 때 어느 브랜드가 AS 좋아?",
+      "prompt": "로봇청소기 살 때 어느 브랜드가 AS 좋아?"
+    },
+    {
+      "prompt_id": "P0093",
+      "category": "로봇청소기",
+      "intent": "브랜드비교",
+      "template": "{c} 중국 브랜드 써도 괜찮아?",
+      "prompt": "로봇청소기 중국 브랜드 써도 괜찮아?"
+    },
+    {
+      "prompt_id": "P0094",
+      "category": "로봇청소기",
+      "intent": "브랜드비교",
+      "template": "{c} 브랜드 순위 매겨줘",
+      "prompt": "로봇청소기 브랜드 순위 매겨줘"
+    },
+    {
+      "prompt_id": "P0095",
+      "category": "로봇청소기",
+      "intent": "브랜드비교",
+      "template": "{c} 대기업 제품이 나아 중소기업이 나아?",
+      "prompt": "로봇청소기 대기업 제품이 나아 중소기업이 나아?"
+    },
+    {
+      "prompt_id": "P0096",
+      "category": "로봇청소기",
+      "intent": "브랜드비교",
+      "template": "{c} 오래 쓸 수 있는 브랜드는?",
+      "prompt": "로봇청소기 오래 쓸 수 있는 브랜드는?"
+    }
+  ]
+}

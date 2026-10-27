@@ -1,0 +1,686 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light}body{margin:0;font:14px system-ui;background:#fafaf8}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>AI 검색 브랜드 노출 분석</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f9; --surface:#fdfdfe; --surface-2:#eef1f6;
+    --ink:#101418; --ink-2:#4d5560; --muted:#7e8794;
+    --line:#e2e6ec; --line-2:#cdd4de;
+    --s1:#2a78d6; --s2:#eb6834;
+    --s1-soft:rgba(42,120,214,.12); --s2-soft:rgba(235,104,52,.12);
+    --crit:#d03b3b;
+    --h0:#e9f0f9; --h1:#cde2fb; --h2:#9ec5f4; --h3:#5598e7; --h4:#2a78d6; --h5:#184f95;
+    --hf0:#7e8794; --hf1:#101418; --hf2:#101418; --hf3:#ffffff; --hf4:#ffffff; --hf5:#ffffff;
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1013; --surface:#16181c; --surface-2:#1d2026;
+      --ink:#f2f4f7; --ink-2:#aab3c0; --muted:#7e8794;
+      --line:#272b31; --line-2:#343942;
+      --s1:#3987e5; --s2:#d95926;
+      --s1-soft:rgba(57,135,229,.16); --s2-soft:rgba(217,89,38,.16);
+      --crit:#e66767;
+      --h0:#171b22; --h1:#16304f; --h2:#1c5cab; --h3:#2a78d6; --h4:#5598e7; --h5:#9ec5f4;
+      --hf0:#7e8794; --hf1:#dbe6f5; --hf2:#ffffff; --hf3:#ffffff; --hf4:#0b0e12; --hf5:#0b0e12;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1013; --surface:#16181c; --surface-2:#1d2026;
+    --ink:#f2f4f7; --ink-2:#aab3c0; --muted:#7e8794;
+    --line:#272b31; --line-2:#343942;
+    --s1:#3987e5; --s2:#d95926;
+    --s1-soft:rgba(57,135,229,.16); --s2-soft:rgba(217,89,38,.16);
+    --crit:#e66767;
+    --h0:#171b22; --h1:#16304f; --h2:#1c5cab; --h3:#2a78d6; --h4:#5598e7; --h5:#9ec5f4;
+    --hf0:#7e8794; --hf1:#dbe6f5; --hf2:#ffffff; --hf3:#ffffff; --hf4:#0b0e12; --hf5:#0b0e12;
+  }
+
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"IBM Plex Sans KR", system-ui, -apple-system, sans-serif;
+    font-size:15px; line-height:1.68; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:1000px; margin:0 auto; padding-inline:20px; padding-block:0 72px; }
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+
+  /* ---- masthead ---- */
+  .mast{ padding-block:44px 28px; border-bottom:2px solid var(--ink); }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--s1); margin:0 0 14px;
+  }
+  h1{
+    font-size:clamp(28px,5.2vw,44px); line-height:1.18; font-weight:700;
+    letter-spacing:-.02em; margin:0 0 14px; text-wrap:balance; max-width:20ch;
+  }
+  .standfirst{ font-size:17px; color:var(--ink-2); margin:0; max-width:62ch; }
+
+  .meta{
+    display:flex; flex-wrap:wrap; gap:0 28px; margin-top:24px;
+    font-family:"IBM Plex Mono", monospace; font-size:11.5px; color:var(--muted);
+  }
+  .meta b{ color:var(--ink-2); font-weight:500; }
+
+  /* ---- KPI ---- */
+  .kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+         border:1px solid var(--line); margin-block:40px 0; }
+  .kpi{ background:var(--surface); padding:20px 18px; }
+  .kpi .k-label{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em;
+                 text-transform:uppercase; color:var(--muted); margin:0 0 10px; }
+  .kpi .k-val{ font-size:32px; font-weight:600; line-height:1; letter-spacing:-.02em; margin:0; }
+  .kpi .k-val.alert{ color:var(--crit); }
+  .kpi .k-val.pos{ color:var(--s1); }
+  .kpi .k-sub{ font-size:12.5px; color:var(--ink-2); margin:9px 0 0; line-height:1.45; }
+  @media(max-width:760px){ .kpis{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:420px){ .kpis{ grid-template-columns:1fr; } }
+
+  /* ---- sections ---- */
+  section{ margin-block:64px 0; }
+  .sec-tag{
+    font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 8px;
+    padding-bottom:8px; border-bottom:1px solid var(--line);
+  }
+  h2{ font-size:clamp(21px,3.2vw,27px); font-weight:600; letter-spacing:-.015em;
+      line-height:1.3; margin:16px 0 12px; text-wrap:balance; max-width:26ch; }
+  .lede{ font-size:15.5px; color:var(--ink-2); margin:0 0 4px; max-width:64ch; }
+  p{ max-width:64ch; }
+  strong{ font-weight:600; color:var(--ink); }
+
+  .callout{
+    border-left:3px solid var(--s1); background:var(--s1-soft);
+    padding:14px 18px; margin:24px 0; max-width:64ch;
+  }
+  .callout p{ margin:0; font-size:14.5px; }
+  .callout.warn{ border-left-color:var(--s2); background:var(--s2-soft); }
+
+  /* ---- chart frame ---- */
+  .fig{ background:var(--surface); border:1px solid var(--line); margin-top:26px; }
+  .fig-head{ display:flex; flex-wrap:wrap; gap:10px; align-items:baseline;
+             justify-content:space-between; padding:16px 18px 0; }
+  .fig-title{ font-size:13.5px; font-weight:600; margin:0; }
+  .fig-note{ font-size:11.5px; color:var(--muted); margin:2px 0 0; font-family:"IBM Plex Mono",monospace; }
+  .fig-body{ padding:14px 18px 18px; overflow-x:auto; }
+  .legend{ display:flex; gap:16px; flex-wrap:wrap; padding:0 18px 12px; }
+  .lg-item{ display:flex; align-items:center; gap:7px; font-size:12px; color:var(--ink-2); }
+  .sw{ width:11px; height:11px; border-radius:50%; flex:none; }
+
+  .toggle{
+    font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.06em;
+    background:none; border:1px solid var(--line-2); color:var(--ink-2);
+    padding:5px 11px; cursor:pointer; border-radius:2px;
+  }
+  .toggle:hover{ background:var(--surface-2); color:var(--ink); }
+  .toggle:focus-visible{ outline:2px solid var(--s1); outline-offset:2px; }
+
+  table{ border-collapse:collapse; width:100%; font-size:12.5px; }
+  th,td{ text-align:right; padding:7px 10px; border-bottom:1px solid var(--line); }
+  th:first-child,td:first-child{ text-align:left; }
+  thead th{ font-weight:500; color:var(--muted); font-size:11px;
+            font-family:"IBM Plex Mono",monospace; letter-spacing:.04em; white-space:nowrap; }
+  td.num{ font-variant-numeric:tabular-nums; font-family:"IBM Plex Mono",monospace; }
+  tbody tr:hover{ background:var(--surface-2); }
+
+  svg{ display:block; }
+  svg text{ font-family:"IBM Plex Sans KR", system-ui, sans-serif; }
+  .ax{ font-family:"IBM Plex Mono", monospace; font-size:10px; fill:var(--muted); }
+  .blab{ font-size:11.5px; fill:var(--ink-2); }
+  .vlab{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; fill:var(--ink-2); }
+  .grid{ stroke:var(--line); stroke-width:1; }
+  .hit{ fill:transparent; cursor:default; }
+
+  .tip{
+    position:fixed; z-index:50; pointer-events:none; opacity:0;
+    background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5;
+    padding:7px 10px; border-radius:3px; max-width:230px; transition:opacity .1s;
+  }
+  .tip b{ font-weight:600; }
+  .tip .t-row{ font-family:"IBM Plex Mono",monospace; font-size:11px; opacity:.85; }
+
+  .cell-lab{ font-family:"IBM Plex Mono",monospace; font-size:10px; }
+
+  ul.takeaways{ padding-left:0; list-style:none; margin:22px 0 0; max-width:64ch; }
+  ul.takeaways li{ padding:14px 0 14px 0; border-top:1px solid var(--line); }
+  ul.takeaways li:last-child{ border-bottom:1px solid var(--line); }
+  .t-head{ font-weight:600; display:block; margin-bottom:4px; }
+  .t-body{ color:var(--ink-2); font-size:14.5px; }
+
+  .method{ background:var(--surface); border:1px solid var(--line); padding:22px 20px; margin-top:26px; }
+  .method h3{ font-size:13px; font-weight:600; margin:0 0 10px;
+              font-family:"IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .method dl{ margin:0; display:grid; grid-template-columns:130px 1fr; gap:9px 18px; font-size:13.5px; }
+  .method dt{ color:var(--muted); font-family:"IBM Plex Mono",monospace; font-size:11.5px; padding-top:3px; }
+  .method dd{ margin:0; color:var(--ink-2); }
+  @media(max-width:560px){ .method dl{ grid-template-columns:1fr; gap:2px 0; }
+                           .method dd{ margin-bottom:10px; } }
+
+  footer{ margin-top:56px; padding-top:20px; border-top:1px solid var(--line);
+          font-size:12px; color:var(--muted); font-family:"IBM Plex Mono",monospace; }
+
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow">AI Search · Share of Voice</p>
+    <h1>AI는 어떤 브랜드를 먼저 부르는가</h1>
+    <p class="standfirst">
+      소비자가 생성형 AI에 제품 추천을 물을 때, 어떤 브랜드가 얼마나, 그리고 몇 번째로 언급되는가.
+      구매 의도를 6가지로 나눠 288건의 실제 응답을 수집·측정했다.
+    </p>
+    <div class="meta">
+      <span>수집 <b>288건</b></span>
+      <span>질의 <b>96개</b> × 3회 반복</span>
+      <span>카테고리 <b>공기청정기 · 로봇청소기</b></span>
+      <span>엔진 <b>Gemini 3.5 Flash Lite</b></span>
+      <span>2026.09</span>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi">
+      <p class="k-label">최초 언급률 1위</p>
+      <p class="k-val pos">67.4%</p>
+      <p class="k-sub">로보락이 로봇청소기 응답의 3분의 2에서 <strong>가장 먼저</strong> 언급됐다</p>
+    </div>
+    <div class="kpi">
+      <p class="k-label">LG전자 최초 언급</p>
+      <p class="k-val alert">0.0%</p>
+      <p class="k-sub">로봇청소기에서 61회 언급됐지만 <strong>맨 앞에 놓인 적은 한 번도</strong> 없다</p>
+    </div>
+    <div class="kpi">
+      <p class="k-label">최대 의도별 편차</p>
+      <p class="k-val">95.8<span style="font-size:20px">%p</span></p>
+      <p class="k-sub">샤오미 공기청정기 — 가성비 100%, 프리미엄 4.2%</p>
+    </div>
+    <div class="kpi">
+      <p class="k-label">중국 브랜드 최초 언급</p>
+      <p class="k-val">93.8%</p>
+      <p class="k-sub">로봇청소기에서 맨 앞에 놓이는 자리의 대부분. 국내 브랜드는 5.6%</p>
+    </div>
+  </div>
+
+  <!-- ================= FINDING 1 ================= -->
+  <section>
+    <p class="sec-tag">발견 1 — 노출률 vs 최초 언급률</p>
+    <h2>언급되는 것과 맨 앞에 놓이는 것은 다르다</h2>
+    <p class="lede">
+      브랜드가 응답에 등장하는 비율(노출률)과, 그 응답에서 <strong>가장 먼저</strong> 등장하는 비율(최초 언급률)을
+      나눠서 재면 전혀 다른 그림이 나온다. 목록에 이름은 오르지만 맨 앞자리에는 못 가는 브랜드가 있다.
+    </p>
+
+    <div class="callout warn">
+      <p>
+        <strong>에코백스</strong>는 로봇청소기 응답의 82.6%에 등장하지만 맨 앞에 놓인 건 <strong>0.7%</strong>다.
+        <strong>LG전자</strong>는 42.4% 노출에 최초 언급 <strong>0.0%</strong>, 평균 언급 순위 4.36번째.
+        도달은 있으나 소비자가 가장 먼저 보는 자리에서는 사실상 밀려 있다.
+      </p>
+    </div>
+
+    <div class="fig">
+      <div class="fig-head">
+        <div>
+          <p class="fig-title">브랜드별 노출률과 최초 언급률의 격차</p>
+          <p class="fig-note">점 사이 거리 = 언급은 되지만 맨 앞에 놓이지 못한 정도</p>
+        </div>
+        <button class="toggle" data-table="tbl-gap">표로 보기</button>
+      </div>
+      <div class="legend">
+        <span class="lg-item"><span class="sw" style="background:var(--s1)"></span>노출률</span>
+        <span class="lg-item"><span class="sw" style="background:var(--s2)"></span>최초 언급률</span>
+      </div>
+      <div class="fig-body" id="fig-gap"></div>
+      <div class="fig-body" id="tbl-gap" hidden></div>
+    </div>
+
+    <div class="callout" style="border-left-color:var(--muted);background:var(--surface-2)">
+      <p>
+        <strong>지표 해석 주의.</strong> 이 값은 "AI가 1위로 꼽았다"가 아니라 <strong>"응답에서 가장 먼저 등장했다"</strong>를 뜻한다.
+        수집된 응답의 73%가 평형·가격대 같은 <strong>세그먼트 순서</strong>로 구성돼 있고, 명시적인 순위 표현이 담긴 응답은 43%였다.
+        따라서 최초 언급률은 추천 순위가 아니라 <strong>소비자가 가장 먼저 마주치는 노출 위치</strong>의 지표로 읽어야 한다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= FINDING 2 ================= -->
+  <section>
+    <p class="sec-tag">발견 2 — 구매 의도별 편차</p>
+    <h2>AI 검색은 하나의 매체가 아니다</h2>
+    <p class="lede">
+      같은 카테고리라도 소비자가 어떤 의도로 묻느냐에 따라 등장하는 브랜드가 갈린다.
+      평균 점유율만 보면 이 구조가 통째로 가려진다. 차이가 <em>생긴다</em>는 방향 자체는 질의 설계에 어느 정도 내재해 있으므로,
+      읽어야 할 것은 방향이 아니라 <strong>그 폭과 브랜드별 프로파일</strong>이다.
+    </p>
+
+    <div class="callout">
+      <p>
+        <strong>샤오미</strong>는 "가성비" 의도에서 100%, "프리미엄"에서 4.2%.
+        <strong>다이슨</strong>은 정확히 반대로 프리미엄 91.7%, 가성비 4.2%.
+        같은 카테고리 안에서 두 브랜드는 사실상 <strong>서로 다른 매체에 노출</strong>되고 있다.
+      </p>
+    </div>
+
+    <div class="fig">
+      <div class="fig-head">
+        <div>
+          <p class="fig-title">구매 의도 × 브랜드 노출 점유율</p>
+          <p class="fig-note">진할수록 높은 노출률 · 셀 위에 커서를 올리면 최초 언급률까지 표시</p>
+        </div>
+        <button class="toggle" data-table="tbl-heat">표로 보기</button>
+      </div>
+      <div class="fig-body" id="fig-heat"></div>
+      <div class="fig-body" id="tbl-heat" hidden></div>
+    </div>
+  </section>
+
+  <!-- ================= FINDING 3 ================= -->
+  <section>
+    <p class="sec-tag">발견 3 — 광고주 진단</p>
+    <h2>LG전자는 지목하면 나오고, 조건으로 찾으면 사라진다</h2>
+    <p class="lede">
+      LG전자의 의도별 노출을 따로 떼어 보면 한 방향으로 기운 패턴이 나온다.
+      브랜드를 이미 알고 비교하는 질문에서는 잘 등장하지만, 조건을 걸고 해답을 찾는 질문에서는 급격히 사라진다.
+    </p>
+
+    <div class="fig">
+      <div class="fig-head">
+        <div>
+          <p class="fig-title">LG전자 — 구매 의도별 노출률</p>
+          <p class="fig-note">브랜드비교 의도와 사용자특성 의도의 격차에 주목</p>
+        </div>
+        <button class="toggle" data-table="tbl-lg">표로 보기</button>
+      </div>
+      <div class="legend">
+        <span class="lg-item"><span class="sw" style="background:var(--s1)"></span>공기청정기</span>
+        <span class="lg-item"><span class="sw" style="background:var(--s2)"></span>로봇청소기</span>
+      </div>
+      <div class="fig-body" id="fig-lg"></div>
+      <div class="fig-body" id="tbl-lg" hidden></div>
+    </div>
+
+    <div class="callout warn">
+      <p>
+        로봇청소기 기준 <strong>브랜드비교 87.5%</strong> vs <strong>사용자특성 8.3%</strong>, <strong>가성비 12.5%</strong>.
+        (브랜드비교의 87.5%는 이 조건에서 가능한 최대치다 — 질의가 LG를 직접 지목한 1개 템플릿이 집계에서 빠지므로,
+        실제로는 <strong>집계 대상 7개 템플릿 전부에서 100%</strong> 등장했다.)
+        "LG 로봇청소기 어때?"에는 답이 나오지만, "반려동물 키우는 집에 맞는 로봇청소기"에는 거의 나오지 않는다.
+        인지도는 남아 있고 <strong>추천 근거가 비어 있는</strong> 상태다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= IMPLICATIONS ================= -->
+  <section>
+    <p class="sec-tag">시사점</p>
+    <h2>미디어 플래닝 관점에서</h2>
+
+    <ul class="takeaways">
+      <li>
+        <span class="t-head">AI 검색은 의도 단위로 쪼개서 관리해야 한다</span>
+        <span class="t-body">
+          브랜드 총 노출률은 의도별 구멍을 가린다. LG전자 공기청정기는 평균 73.4%로 3위지만
+          가성비 의도에서는 20.8%로 떨어진다. 매체 단위가 아니라 의도 단위가 관리 단위여야 한다.
+        </span>
+      </li>
+      <li>
+        <span class="t-head">노출률과 최초 언급률은 별도의 KPI다</span>
+        <span class="t-body">
+          전통 매체의 도달과 점유가 다르듯, AI 검색에서도 "언급됨"과 "가장 먼저 언급됨"은 다른 성과다.
+          에코백스(82.6% / 0.7%)처럼 둘이 극단적으로 갈리는 사례가 실재한다. 다만 최초 언급률은 순위가 아니라
+          노출 위치의 지표이므로 순위형 KPI로 곧바로 치환해서는 안 된다.
+        </span>
+      </li>
+      <li>
+        <span class="t-head">오프라인 강자가 AI 검색에서는 사라질 수 있다</span>
+        <span class="t-body">
+          국내 렌탈 시장의 주요 사업자인 코웨이는 공기청정기 노출률 9.1%, 최초 언급률 0%(95% 신뢰구간 0~3%).
+          SK매직은 1.4%. 실제 시장 지위와 AI 검색 내 존재감이 일치하지 않는다.
+        </span>
+      </li>
+      <li>
+        <span class="t-head">로봇청소기 카테고리는 이미 판도가 기울어 있다</span>
+        <span class="t-body">
+          맨 앞자리를 중국 브랜드가 93.8% 가져간다. 국내 두 브랜드 합계는 5.6%.
+          이 카테고리에서 AI 검색은 방어가 아니라 탈환의 문제다.
+        </span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ================= METHOD ================= -->
+  <section>
+    <p class="sec-tag">방법론과 한계</p>
+    <h2>어떻게 측정했고, 무엇을 측정하지 못했는가</h2>
+
+    <div class="method">
+      <h3>측정 설계</h3>
+      <dl>
+        <dt>질의 설계</dt>
+        <dd>구매 의도 6유형(일반추천·가성비·프리미엄·공간상황·사용자특성·브랜드비교) × 변형 8개 × 카테고리 2개 = 96개 질의</dd>
+        <dt>반복 측정</dt>
+        <dd>생성형 AI 응답은 확률적이므로 질의당 3회 반복 수집 후 평균. 총 288건</dd>
+        <dt>지표</dt>
+        <dd>노출률 = 브랜드가 언급된 응답 비율 · 최초 언급률 = 응답에서 가장 먼저 언급된 비율 · 평균 언급 순위</dd>
+        <dt>브랜드 식별</dt>
+        <dd>브랜드명과 제품 라인명(퓨리케어, 비스포크, 디봇 등)을 별칭 사전으로 매칭</dd>
+        <dt>편향 통제</dt>
+        <dd>질의문이 직접 지목한 브랜드의 언급은 '유도된 언급'으로 보고 집계에서 제외(12건)</dd>
+        <dt>매칭 검증</dt>
+        <dd>모호한 별칭(타워·제로·디봇 등)만으로 매칭된 사례를 감사한 결과 15건, 모두 실제 제품 라인명으로 확인</dd>
+        <dt>표현 민감도</dt>
+        <dd>의도별 차이가 특정 문장 하나에서 비롯됐는지 확인하기 위해 의도 안의 템플릿 8개를 각각 집계했다.
+            샤오미 가성비는 8개 전부 100%, 다이슨 프리미엄은 6개가 100% — 표현을 바꿔도 결과가 유지됐다</dd>
+        <dt>독립 재계산</dt>
+        <dd>수집 원본에서 별도 로직으로 전 지표를 재산출해 대조했다. 노출률은 전부 일치했고,
+            최초 언급률에서 3건의 집계 차이를 발견해 수정 반영했다</dd>
+      </dl>
+    </div>
+
+    <div class="method" style="margin-top:14px">
+      <h3>한계</h3>
+      <dl>
+        <dt>단일 엔진</dt>
+        <dd>Gemini 3.5 Flash Lite 한 종만 측정했다. 엔진 간 비교는 무료 API 할당량 소진으로 수집하지 못했다. 다른 엔진에서 같은 패턴이 나타나는지는 검증되지 않았다</dd>
+        <dt>검색 연결 미측정</dt>
+        <dd>실시간 웹 검색을 연결한 조건(grounding)은 할당량 제약으로 수집하지 못했다. 본 결과는 모델 내부 지식 기반 응답에 한정된다</dd>
+        <dt>시점</dt>
+        <dd>2026년 9월 단일 시점 측정. 모델이 갱신되면 결과는 달라질 수 있다</dd>
+        <dt>카테고리</dt>
+        <dd>생활가전 2개 카테고리. 다른 업종으로의 일반화는 추가 검증이 필요하다</dd>
+        <dt>질의문의 출처</dt>
+        <dd>질의 96개는 실제 검색 로그가 아니라 구매 상황을 가정해 직접 설계한 문장이다.
+            "소비자가 이렇게 묻는다"는 전제 자체는 검증된 바 없다</dd>
+        <dt>표본 규모</dt>
+        <dd>의도×카테고리 한 칸의 표본은 24건이다. 관측값 0%의 95% 신뢰구간은 0~14%,
+            20.8%는 9~40%로 폭이 넓다. 칸 사이 10%p 안팎의 차이는 해석하지 않았고,
+            100% 대 4.2%처럼 큰 대비만 근거로 사용했다</dd>
+        <dt>지표의 성격</dt>
+        <dd>최초 언급률은 등장 위치를 재는 값이지 AI가 매긴 추천 순위가 아니다.
+            응답의 73%가 세그먼트 순서로 구성돼 있어 순위 지표로 확대 해석할 수 없다</dd>
+      </dl>
+    </div>
+  </section>
+
+  <footer>
+    데이터 수집·분석·시각화 · 2026.09 · 수집 288건 / 분석 287건 · 독립 재계산으로 전 수치 교차검증
+  </footer>
+</div>
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+const DATA = {"overall": {"공기청정기": [{"b": "삼성전자", "sov": 85.3, "t1": 46.9, "mr": 1.65, "n": 122}, {"b": "샤오미", "sov": 76.2, "t1": 28.7, "mr": 2.53, "n": 109}, {"b": "LG전자", "sov": 73.4, "t1": 7.7, "mr": 2.3, "n": 105}, {"b": "위닉스", "sov": 60.8, "t1": 10.5, "mr": 2.75, "n": 87}, {"b": "다이슨", "sov": 30.1, "t1": 4.2, "mr": 3.02, "n": 43}, {"b": "쿠쿠", "sov": 18.9, "t1": 0.0, "mr": 3.78, "n": 27}, {"b": "블루에어", "sov": 11.9, "t1": 0.7, "mr": 4.18, "n": 17}, {"b": "코웨이", "sov": 9.1, "t1": 0.0, "mr": 3.92, "n": 13}, {"b": "SK매직", "sov": 1.4, "t1": 0.0, "mr": 4.5, "n": 2}], "로봇청소기": [{"b": "로보락", "sov": 97.9, "t1": 67.4, "mr": 1.41, "n": 141}, {"b": "에코백스", "sov": 82.6, "t1": 0.7, "mr": 2.67, "n": 119}, {"b": "샤오미", "sov": 73.6, "t1": 24.3, "mr": 2.55, "n": 106}, {"b": "삼성전자", "sov": 53.5, "t1": 5.6, "mr": 3.57, "n": 77}, {"b": "LG전자", "sov": 42.4, "t1": 0.0, "mr": 4.36, "n": 61}, {"b": "드리미", "sov": 34.7, "t1": 1.4, "mr": 3.8, "n": 50}, {"b": "나르왈", "sov": 25.0, "t1": 0.0, "mr": 3.14, "n": 36}, {"b": "아이로봇", "sov": 1.4, "t1": 0.0, "mr": 3.0, "n": 2}]}, "intent": {"공기청정기": {"LG전자": {"sov": [95.8, 20.8, 83.3, 83.3, 70.8, 87.0], "t1": [16.7, 0.0, 4.2, 12.5, 8.3, 4.3]}, "삼성전자": {"sov": [100.0, 54.2, 87.5, 95.8, 87.5, 87.0], "t1": [45.8, 4.2, 66.7, 37.5, 58.3, 69.6]}, "코웨이": {"sov": [0.0, 0.0, 4.2, 4.2, 12.5, 34.8], "t1": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "위닉스": {"sov": [83.3, 66.7, 12.5, 66.7, 79.2, 56.5], "t1": [4.2, 33.3, 0.0, 16.7, 4.2, 4.3]}, "다이슨": {"sov": [20.8, 4.2, 91.7, 12.5, 4.2, 47.8], "t1": [0.0, 0.0, 25.0, 0.0, 0.0, 0.0]}, "샤오미": {"sov": [91.7, 100.0, 4.2, 91.7, 91.7, 78.3], "t1": [33.3, 62.5, 0.0, 33.3, 29.2, 13.0]}, "블루에어": {"sov": [8.3, 8.3, 20.8, 12.5, 4.2, 17.4], "t1": [0.0, 0.0, 4.2, 0.0, 0.0, 0.0]}, "SK매직": {"sov": [0.0, 0.0, 0.0, 0.0, 0.0, 8.7], "t1": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "쿠쿠": {"sov": [12.5, 50.0, 0.0, 16.7, 8.3, 26.1], "t1": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}, "로봇청소기": {"LG전자": {"sov": [75.0, 12.5, 29.2, 41.7, 8.3, 87.5], "t1": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "삼성전자": {"sov": [83.3, 41.7, 41.7, 45.8, 20.8, 87.5], "t1": [0.0, 0.0, 0.0, 0.0, 0.0, 33.3]}, "로보락": {"sov": [100.0, 95.8, 100.0, 95.8, 100.0, 95.8], "t1": [95.8, 16.7, 100.0, 62.5, 70.8, 58.3]}, "에코백스": {"sov": [91.7, 58.3, 91.7, 79.2, 87.5, 87.5], "t1": [0.0, 0.0, 0.0, 4.2, 0.0, 0.0]}, "드리미": {"sov": [37.5, 12.5, 20.8, 29.2, 37.5, 70.8], "t1": [0.0, 0.0, 0.0, 4.2, 4.2, 0.0]}, "샤오미": {"sov": [95.8, 95.8, 4.2, 87.5, 83.3, 75.0], "t1": [4.2, 83.3, 0.0, 29.2, 25.0, 4.2]}, "나르왈": {"sov": [16.7, 8.3, 70.8, 33.3, 12.5, 8.3], "t1": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "아이로봇": {"sov": [4.2, 0.0, 0.0, 4.2, 0.0, 0.0], "t1": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}}, "order": ["일반추천", "가성비", "프리미엄", "공간상황", "사용자특성", "브랜드비교"]};
+
+const CATS = ["공기청정기", "로봇청소기"];
+const NS = "http://www.w3.org/2000/svg";
+const tip = document.getElementById("tip");
+
+function el(tag, attrs, text){
+  const n = document.createElementNS(NS, tag);
+  for(const k in attrs) n.setAttribute(k, attrs[k]);
+  if(text != null) n.textContent = text;
+  return n;
+}
+function showTip(evt, html){
+  tip.innerHTML = html;
+  tip.style.opacity = "1";
+  const r = tip.getBoundingClientRect();
+  let x = evt.clientX + 14, y = evt.clientY - r.height - 10;
+  if(x + r.width > innerWidth - 8) x = evt.clientX - r.width - 14;
+  if(y < 8) y = evt.clientY + 18;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+function hideTip(){ tip.style.opacity = "0"; }
+function bindTip(node, html){
+  node.addEventListener("mousemove", e => showTip(e, html));
+  node.addEventListener("mouseleave", hideTip);
+}
+
+/* ---------- FIG 1 : dumbbell ---------- */
+function drawGap(){
+  const host = document.getElementById("fig-gap");
+  CATS.forEach((cat, ci) => {
+    const rows = DATA.overall[cat];
+    const PAD_L = 76, PAD_R = 52, PAD_T = 30, ROW = 30;
+    const W = 620, H = PAD_T + rows.length * ROW + 16;
+    const plotW = W - PAD_L - PAD_R;
+    const x = v => PAD_L + (v / 100) * plotW;
+
+    const box = document.createElement("div");
+    if(ci) box.style.marginTop = "26px";
+    const cap = document.createElement("p");
+    cap.className = "fig-note";
+    cap.style.cssText = "margin:0 0 4px;color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;font-size:12.5px;font-weight:600";
+    cap.textContent = cat;
+    box.appendChild(cap);
+
+    const svg = el("svg", {viewBox:`0 0 ${W} ${H}`, width:"100%", style:`min-width:520px;height:${H}px`});
+
+    [0,25,50,75,100].forEach(t => {
+      svg.appendChild(el("line", {x1:x(t), x2:x(t), y1:PAD_T-8, y2:H-14, class:"grid"}));
+      const tx = el("text", {x:x(t), y:PAD_T-14, class:"ax", "text-anchor":"middle"}, t + "%");
+      svg.appendChild(tx);
+    });
+
+    rows.forEach((r, i) => {
+      const cy = PAD_T + i * ROW + ROW/2;
+      const isLG = r.b === "LG전자";
+
+      svg.appendChild(el("text", {
+        x: PAD_L - 12, y: cy + 4, class:"blab", "text-anchor":"end",
+        style: isLG ? "fill:var(--ink);font-weight:600" : ""
+      }, r.b));
+
+      svg.appendChild(el("line", {
+        x1:x(Math.min(r.sov, r.t1)), x2:x(Math.max(r.sov, r.t1)), y1:cy, y2:cy,
+        stroke:"var(--line-2)", "stroke-width":"2"
+      }));
+
+      const d2 = el("circle", {cx:x(r.t1), cy:cy, r:5, fill:"var(--s2)",
+        stroke:"var(--surface)", "stroke-width":"2"});
+      const d1 = el("circle", {cx:x(r.sov), cy:cy, r:5, fill:"var(--s1)",
+        stroke:"var(--surface)", "stroke-width":"2"});
+      svg.appendChild(d2); svg.appendChild(d1);
+
+      svg.appendChild(el("text", {
+        x: x(r.sov) + 11, y: cy + 4, class:"vlab",
+        style: isLG ? "fill:var(--ink);font-weight:600" : ""
+      }, r.sov.toFixed(1) + "%"));
+
+      const hit = el("rect", {x:PAD_L-72, y:cy-ROW/2, width:W-PAD_L+72, height:ROW, class:"hit"});
+      bindTip(hit,
+        `<b>${r.b}</b><div class="t-row">노출률 ${r.sov.toFixed(1)}% · ${r.n}회 언급</div>`+
+        `<div class="t-row">최초 언급률 ${r.t1.toFixed(1)}%</div>`+
+        `<div class="t-row">평균 언급 순위 ${r.mr.toFixed(2)}번째</div>`);
+      svg.appendChild(hit);
+    });
+
+    box.appendChild(svg);
+    host.appendChild(box);
+  });
+
+  // table twin
+  const t = document.getElementById("tbl-gap");
+  CATS.forEach((cat, ci) => {
+    const h = document.createElement("p");
+    h.className = "fig-note";
+    h.style.cssText = "margin:"+(ci?"20px":"0")+" 0 6px;color:var(--ink);font-weight:600";
+    h.textContent = cat;
+    t.appendChild(h);
+    const tab = document.createElement("table");
+    tab.innerHTML = "<thead><tr><th>브랜드</th><th>노출률</th><th>최초 언급률</th><th>평균 언급 순위</th><th>언급 횟수</th></tr></thead><tbody>"
+      + DATA.overall[cat].map(r =>
+        `<tr><td>${r.b}</td><td class="num">${r.sov.toFixed(1)}%</td><td class="num">${r.t1.toFixed(1)}%</td><td class="num">${r.mr.toFixed(2)}</td><td class="num">${r.n}</td></tr>`
+      ).join("") + "</tbody>";
+    t.appendChild(tab);
+  });
+}
+
+/* ---------- FIG 2 : heatmap ---------- */
+function heatStep(v){
+  if(v <= 0) return 0;
+  if(v <= 20) return 1;
+  if(v <= 40) return 2;
+  if(v <= 60) return 3;
+  if(v <= 80) return 4;
+  return 5;
+}
+function drawHeat(){
+  const host = document.getElementById("fig-heat");
+  const intents = DATA.order;
+
+  CATS.forEach((cat, ci) => {
+    const brands = Object.keys(DATA.intent[cat])
+      .sort((a,b) => {
+        const s = arr => arr.reduce((p,c)=>p+c,0);
+        return s(DATA.intent[cat][b].sov) - s(DATA.intent[cat][a].sov);
+      });
+    const PAD_L = 76, PAD_T = 42, CW = 78, CH = 32, GAP = 2;
+    const W = PAD_L + intents.length * CW + 8;
+    const H = PAD_T + brands.length * CH + 8;
+
+    const box = document.createElement("div");
+    if(ci) box.style.marginTop = "28px";
+    const cap = document.createElement("p");
+    cap.className = "fig-note";
+    cap.style.cssText = "margin:0 0 6px;color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;font-size:12.5px;font-weight:600";
+    cap.textContent = cat;
+    box.appendChild(cap);
+
+    const svg = el("svg", {viewBox:`0 0 ${W} ${H}`, width:"100%", style:`min-width:${W}px;height:${H}px`});
+
+    intents.forEach((it, j) => {
+      svg.appendChild(el("text", {
+        x: PAD_L + j*CW + (CW-GAP)/2, y: PAD_T - 14, class:"blab", "text-anchor":"middle",
+        style:"font-size:11px"
+      }, it));
+    });
+
+    brands.forEach((b, i) => {
+      const isLG = b === "LG전자";
+      svg.appendChild(el("text", {
+        x: PAD_L - 12, y: PAD_T + i*CH + CH/2 + 3, class:"blab", "text-anchor":"end",
+        style: isLG ? "fill:var(--ink);font-weight:600" : ""
+      }, b));
+
+      intents.forEach((it, j) => {
+        const v = DATA.intent[cat][b].sov[j];
+        const t1 = DATA.intent[cat][b].t1[j];
+        const s = heatStep(v);
+        const gx = PAD_L + j*CW, gy = PAD_T + i*CH;
+        const rect = el("rect", {
+          x:gx, y:gy, width:CW-GAP, height:CH-GAP,
+          fill:`var(--h${s})`, rx:2
+        });
+        svg.appendChild(rect);
+        svg.appendChild(el("text", {
+          x: gx + (CW-GAP)/2, y: gy + CH/2 + 3, class:"cell-lab",
+          "text-anchor":"middle", fill:`var(--hf${s})`
+        }, v === 0 ? "–" : v.toFixed(0)));
+        bindTip(rect,
+          `<b>${b}</b> · ${it}<div class="t-row">노출률 ${v.toFixed(1)}%</div>`+
+          `<div class="t-row">최초 언급률 ${t1.toFixed(1)}%</div>`);
+      });
+    });
+
+    box.appendChild(svg);
+    host.appendChild(box);
+  });
+
+  // scale legend
+  const sc = document.createElement("div");
+  sc.style.cssText = "display:flex;align-items:center;gap:8px;margin-top:16px;font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace";
+  sc.innerHTML = "<span>노출률 0%</span>" +
+    [0,1,2,3,4,5].map(s => `<span style="width:28px;height:12px;background:var(--h${s});display:inline-block;border-radius:2px"></span>`).join("") +
+    "<span>100%</span>";
+  host.appendChild(sc);
+
+  // table twin
+  const t = document.getElementById("tbl-heat");
+  CATS.forEach((cat, ci) => {
+    const h = document.createElement("p");
+    h.className = "fig-note";
+    h.style.cssText = "margin:"+(ci?"20px":"0")+" 0 6px;color:var(--ink);font-weight:600";
+    h.textContent = cat + " — 노출률(%)";
+    t.appendChild(h);
+    const brands = Object.keys(DATA.intent[cat]);
+    const tab = document.createElement("table");
+    tab.innerHTML = "<thead><tr><th>브랜드</th>" + DATA.order.map(i=>`<th>${i}</th>`).join("") + "</tr></thead><tbody>"
+      + brands.map(b => `<tr><td>${b}</td>` +
+          DATA.intent[cat][b].sov.map(v=>`<td class="num">${v.toFixed(1)}</td>`).join("") + "</tr>").join("")
+      + "</tbody>";
+    t.appendChild(tab);
+  });
+}
+
+/* ---------- FIG 3 : LG grouped bar ---------- */
+function drawLG(){
+  const host = document.getElementById("fig-lg");
+  const intents = DATA.order;
+  const PAD_L = 82, PAD_R = 46, PAD_T = 28, GROUP = 46, BAR = 15;
+  const W = 620, H = PAD_T + intents.length * GROUP + 14;
+  const plotW = W - PAD_L - PAD_R;
+  const x = v => (v / 100) * plotW;
+
+  const svg = el("svg", {viewBox:`0 0 ${W} ${H}`, width:"100%", style:`min-width:520px;height:${H}px`});
+
+  [0,25,50,75,100].forEach(t => {
+    svg.appendChild(el("line", {x1:PAD_L+x(t), x2:PAD_L+x(t), y1:PAD_T-8, y2:H-12, class:"grid"}));
+    svg.appendChild(el("text", {x:PAD_L+x(t), y:PAD_T-14, class:"ax", "text-anchor":"middle"}, t+"%"));
+  });
+
+  intents.forEach((it, i) => {
+    const gy = PAD_T + i*GROUP;
+    svg.appendChild(el("text", {x:PAD_L-12, y:gy + GROUP/2 + 3, class:"blab", "text-anchor":"end"}, it));
+
+    CATS.forEach((cat, k) => {
+      const v = DATA.intent[cat]["LG전자"].sov[i];
+      const t1 = DATA.intent[cat]["LG전자"].t1[i];
+      const by = gy + 6 + k*(BAR+3);
+      const w = Math.max(x(v), v > 0 ? 2 : 0);
+      const bar = el("rect", {
+        x:PAD_L, y:by, width:w, height:BAR,
+        fill: k ? "var(--s2)" : "var(--s1)", rx:2
+      });
+      svg.appendChild(bar);
+      svg.appendChild(el("text", {
+        x: PAD_L + w + 8, y: by + BAR - 3, class:"vlab"
+      }, v.toFixed(1) + "%"));
+      const hit = el("rect", {x:PAD_L, y:by-2, width:plotW, height:BAR+4, class:"hit"});
+      bindTip(hit, `<b>LG전자</b> · ${cat}<div class="t-row">${it} 노출률 ${v.toFixed(1)}%</div>`+
+                   `<div class="t-row">최초 언급률 ${t1.toFixed(1)}%</div>`);
+      svg.appendChild(hit);
+    });
+  });
+
+  host.appendChild(svg);
+
+  const t = document.getElementById("tbl-lg");
+  const tab = document.createElement("table");
+  tab.innerHTML = "<thead><tr><th>구매 의도</th><th>공기청정기 노출률</th><th>공기청정기 최초언급</th><th>로봇청소기 노출률</th><th>로봇청소기 최초언급</th></tr></thead><tbody>"
+    + intents.map((it,i) =>
+      `<tr><td>${it}</td>`+
+      `<td class="num">${DATA.intent["공기청정기"]["LG전자"].sov[i].toFixed(1)}%</td>`+
+      `<td class="num">${DATA.intent["공기청정기"]["LG전자"].t1[i].toFixed(1)}%</td>`+
+      `<td class="num">${DATA.intent["로봇청소기"]["LG전자"].sov[i].toFixed(1)}%</td>`+
+      `<td class="num">${DATA.intent["로봇청소기"]["LG전자"].t1[i].toFixed(1)}%</td></tr>`
+    ).join("") + "</tbody>";
+  t.appendChild(tab);
+}
+
+drawGap(); drawHeat(); drawLG();
+
+document.querySelectorAll(".toggle").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tbl = document.getElementById(btn.dataset.table);
+    const fig = tbl.previousElementSibling;
+    const showTable = tbl.hidden;
+    tbl.hidden = !showTable;
+    fig.hidden = showTable;
+    btn.textContent = showTable ? "차트로 보기" : "표로 보기";
+    hideTip();
+  });
+});
+</script>
+</body></html>
